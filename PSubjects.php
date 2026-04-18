@@ -13,6 +13,7 @@ $user_id = $_SESSION['id'];
 /* Dynamic dashboard link */
 $dashboard_link = ($role === "professor") ? "dashboard_prof.php" : "dashboard_student.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,140 +22,27 @@ $dashboard_link = ($role === "professor") ? "dashboard_prof.php" : "dashboard_st
 <title>Subjects</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #f4f6f9;
-}
-
-/* HEADER */
-.header {
-    background: #59c029;
-    color: white;
-    padding: 15px;
-    text-align: center;
-    position: relative;
-}
-
-/* MENU BUTTON */
-.menu-btn {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 22px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    display: none;
-}
-
-/* LAYOUT */
-.container {
-    display: flex;
-}
-
-/* SIDEBAR */
-.sidebar {
-    width: 200px;
-    background: #216103;
-    height: 100vh;
-    padding-top: 20px;
-    transition: 0.3s;
-}
-
-.sidebar a {
-    display: block;
-    color: white;
-    padding: 12px;
-    text-decoration: none;
-}
-
-.sidebar a:hover {
-    background: #1abc9c;
-}
-
-/* CONTENT */
-.content {
-    flex: 1;
-    padding: 20px;
-}
-
-/* SUBJECT AREA */
-.subject-area {
-    max-width: 900px;
-    margin: auto;
-}
-
-/* CARD */
-.card {
-    background: white;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-}
-
-/* INPUTS */
-input {
-    padding: 10px;
-    width: 100%;
-    margin: 10px 0;
-}
-
-/* BUTTON */
-button {
-    padding: 10px 15px;
-    border: none;
-    background: #59c029;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-/* 📱 MOBILE */
-@media (max-width: 768px) {
-
-    .menu-btn {
-        display: block;
-    }
-
-    .sidebar {
-        position: fixed;
-        left: -200px;
-        top: 0;
-        height: 100%;
-        z-index: 1000;
-    }
-
-    .sidebar.active {
-        left: 0;
-    }
-
-    .container {
-        flex-direction: column;
-    }
-}
+body { margin:0; font-family:Arial; background:#f4f6f9; }
+.header { background:#59c029; color:white; padding:15px; text-align:center; }
+.container { display:flex; }
+.sidebar { width:200px; background:#216103; height:100vh; padding-top:20px; }
+.sidebar a { display:block; color:white; padding:12px; text-decoration:none; }
+.sidebar a:hover { background:#1abc9c; }
+.content { flex:1; padding:20px; }
+.card { background:white; padding:15px; margin:10px 0; border-radius:10px; box-shadow:2px 2px 5px rgba(0,0,0,0.1); }
+button { padding:10px 15px; border:none; background:#59c029; color:white; border-radius:8px; cursor:pointer; }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
     <h2>Subjects</h2>
 </div>
 
 <div class="container">
 
-    <!-- SIDEBAR -->
-    <div id="sidebar" class="sidebar">
+    <div class="sidebar">
         <a href="<?php echo $dashboard_link; ?>">Dashboard</a>
         <a href="#">Subjects</a>
         <a href="#">Assignments</a>
@@ -162,17 +50,16 @@ button {
         <a href="Choose_role.php">Logout</a>
     </div>
 
-    <!-- CONTENT -->
     <div class="content">
-        <div class="subject-area">
 
 <?php if ($role == "professor"): ?>
 
     <h2>Your Classes</h2>
 
-    <form method="POST" action="CreateClass.php">
-        <button type="submit">+ Create Class</button>
-    </form>
+    
+    <a href="CreateClass.php">
+        <button type="button">+ Create Class</button>
+    </a>
 
     <?php
     $query = "SELECT * FROM classes WHERE professor_id = '$user_id'";
@@ -213,16 +100,8 @@ button {
 
 <?php endif; ?>
 
-        </div>
     </div>
-
 </div>
-
-<script>
-function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("active");
-}
-</script>
 
 </body>
 </html>
