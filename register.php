@@ -30,68 +30,94 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        body {
-            font-family: Arial;
-            background: #f0fdf4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .box {
-            width: 340px;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            border-top: 5px solid #16a34a;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(61, 55, 55, 0.1);
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0fdf4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-        }
+/* Container */
+.box {
+    width: 90%;
+    max-width: 420px;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border-top: 5px solid #16a34a;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
 
-        .btn {
-            width: 100%;
-            padding: 10px;
-            background: #16a34a;
-            color: white;
-            border: none;
-        }
+/* Title */
+h2 {
+    color: #16a34a;
+}
 
-        a {
-            display: block;
-            margin-top: 10px;
-        }
-        .password-container {
-    position: relative;
+/* Inputs */
+input, select {
     width: 100%;
-    max-width: 300px;
-        }
-        .password-container input {
-            width: 100%;
-            padding: 10px 40px 10px 10px;
-            font-size: 16px;
-        }
-        .toggle-btn {
-            position: absolute;
-            left: 320px;
-            top: 83%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-        }
-        .login-back {
-            text-decoration: none;
-            color: #11813a;
-        }
-    </style>
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #15803d;
+}
+
+/* Link */
+.login-back {
+    display: block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #16a34a;
+}
+
+/* Password container */
+.password-container {
+    position: relative;
+}
+
+/* Eye icon */
+.toggle-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .box {
+        padding: 20px;
+    }
+}
+</style>
 </head>
 
 <body>
@@ -100,18 +126,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <h2>Register</h2>
 
-    <form method="POST">
-        <div class="password-container">
+    <form method="POST" onsubmit="return validatePasswords()">
+
         <input type="text" name="name" placeholder="Full Name" required>
+
         <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" id="password" placeholder="Password" required>
-        <button type="button" class="toggle-btn" onclick="togglePassword()">👁</button>
-</div>
-        <select name="role">
+
+        <div class="password-container">
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <button type="button" class="toggle-btn" onclick="togglePassword()">👁</button>
+        </div>
+
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+
+        <select name="role" required>
+            <option value="">Select Role</option>
             <option value="student">Student</option>
             <option value="professor">Professor</option>
         </select>
-        
+
         <button class="btn" type="submit">Register</button>
 
     </form>
@@ -122,13 +155,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </div>
 <script>
- function togglePassword() {
+function togglePassword() {
     const pass = document.getElementById('password');
     pass.type = (pass.type === 'password') ? 'text' : 'password';
- }
+}
 
+function validatePasswords() {
+    const pass = document.getElementById('password').value;
+    const confirm = document.getElementById('confirmPassword').value;
 
-
+    if (pass !== confirm) {
+        alert("Passwords do not match!");
+        return false;
+    }
+    return true;
+}
 </script>
 
 </body>
