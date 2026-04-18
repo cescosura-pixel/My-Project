@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         body {
@@ -45,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 12px;
             border-top: 5px solid #16a34a;
             text-align: center;
+            box-shadow: 0 10px 25px rgba(61, 55, 55, 0.1);
         }
 
         input, select {
@@ -65,6 +67,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: block;
             margin-top: 10px;
         }
+        .password-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+        }
+        .password-container input {
+            width: 100%;
+            padding: 10px 40px 10px 10px;
+            font-size: 16px;
+        }
+        .toggle-btn {
+            position: absolute;
+            left: 320px;
+            top: 83%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .login-back {
+            text-decoration: none;
+            color: #11813a;
+        }
     </style>
 </head>
 
@@ -75,25 +101,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Register</h2>
 
     <form method="POST">
-
+        <div class="password-container">
         <input type="text" name="name" placeholder="Full Name" required>
         <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-
+        <input type="password" name="password" id="password" placeholder="Password" required>
+        <button type="button" class="toggle-btn" onclick="togglePassword()">👁</button>
+</div>
         <select name="role">
             <option value="student">Student</option>
             <option value="professor">Professor</option>
         </select>
-
+        
         <button class="btn" type="submit">Register</button>
 
     </form>
 
     <p><?php echo $message; ?></p>
 
-    <a href="Login.php">Back to Login</a>
+    <a class="login-back" href="Login.php">Back to Login</a>
 
 </div>
+<script>
+ function togglePassword() {
+    const pass = document.getElementById('password');
+    pass.type = (pass.type === 'password') ? 'text' : 'password';
+ }
+
+
+
+</script>
 
 </body>
 </html>

@@ -12,10 +12,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = authenticate($email, $password);
 
     if ($user) {
-
+      
+        $_SESSION['id'] = $user['id'];
         $_SESSION['email'] = $user['Email'];
         $_SESSION['role'] = $user['role'];
-
+        $_SESSION['name'] = $user['name'];
+        
         if ($user['role'] === "student") {
             header("Location: dashboard_student.php");
         } elseif ($user['role'] === "professor") {
@@ -34,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         body {
@@ -47,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .box {
-            width: 340px;
+            width: 350px;
             background: white;
             padding: 25px;
             border-radius: 12px;
@@ -69,12 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .btn {
-            width: 100%;
+            width: 350px;
             padding: 10px;
             background: #16a34a;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 15px;
         }
 
         .btn:hover {
@@ -92,6 +95,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #16a34a;
             text-decoration: none;
         }
+        .password-container {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+        }
+        .password-container input {
+    width: 100%;
+    padding: 10px 40px 10px 10px; 
+    font-size: 16px;
+}
+.toggle-btn {
+    position: absolute;
+    left: 320px;
+    top: 55%; 
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
     </style>
 </head>
 
@@ -102,9 +125,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Login</h2>
 
     <form method="POST">
+        <div class="password-container">
         <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <input type="password" name="password" id="password" placeholder="Password" required>
+        <button type="button" class="toggle-btn" onclick="togglePassword()">👁</button>
         <button class="btn" type="submit">Login</button>
+        </div>
     </form>
 
     <p class="error"><?php echo $error; ?></p>
@@ -112,6 +138,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <a href="register.php">Create Account</a>
 
 </div>
+<script>
+ function togglePassword() {
+   const pass = document.getElementById('password');
+   pass.type = (pass.type === 'password') ? 'text' : 'password';
+}
+
+</script>
 
 </body>
 </html>

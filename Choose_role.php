@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Choose Role</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         body {
@@ -15,9 +16,9 @@
         }
 
         .box {
-            width: 320px;
+            width: 325px;
             background: white;
-            padding: 30px;
+            padding: 40px;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             border-top: 5px solid #16a34a; /* green primary */
@@ -32,7 +33,7 @@
         .btn {
             display: block;
             width: 100%;
-            padding: 12px;
+            padding: 12px 5px 12px 5px;
             margin: 10px 0;
             text-decoration: none;
             color: white;
@@ -47,7 +48,7 @@
         }
 
         .btn.secondary {
-            background: #22c55e;
+            background: #16a34a;
         }
 
         .btn.secondary:hover {

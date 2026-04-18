@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'professor') {
+
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: Login.php");
     exit();
 }
@@ -10,7 +11,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'professor') {
 <!DOCTYPE html>
 <html>
 <head>
-<title>Professor Dashboard</title>
+<title>Student Dashboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -33,7 +34,7 @@ body {
 
 .sidebar {
     width:200px;
-    background: #216103;
+   background: #216103;
     height:100vh;
     padding-top:20px;
 }
@@ -42,11 +43,11 @@ body {
     display:block;
     color:white;
     padding:12px;
-    text-decoration: none;
+    text-decoration:none;
 }
 
 .sidebar a:hover {
-   background: #1abc9c;
+    background: #1abc9c;
 }
 
 .content {
@@ -59,7 +60,7 @@ body {
     padding:20px;
     margin-bottom:15px;
     border-radius:10px;
-    box-shadow: 2px 2px 2px #bbc4d1;
+     box-shadow: 2px 2px 2px #bbc4d1;
 }
 h2 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -73,14 +74,14 @@ h2 {
 <body>
 
 <div class="header">
-    <h2>Professor Dashboard</h2>
+    <h2>Student Dashboard</h2>
 </div>
 
 <div class="container">
 
 <div class="sidebar">
     <a href="#">Dashboard</a>
-    <a href="PSubjects.php">Subjects</a>
+    <a href="#">Subjects</a>
     <a href="#">Assignments</a>
     <a href="#">Grades</a>
     <a href="Choose_role.php">Logout</a>
@@ -89,7 +90,7 @@ h2 {
 <div class="content">
 
 <div class="card">
-    <h3>Welcome Professor</h3>
+    <h3>Welcome Student</h3>
     <h2><?php echo $_SESSION['name']; ?></h2>
     <p><?php echo $_SESSION['email']; ?></p>
 </div>
