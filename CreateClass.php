@@ -2,26 +2,41 @@
 session_start();
 include "connection.php";
 
-// check if form is submitted
+
+if (!isset($_SESSION['id'])) {
+    die("You must be logged in.");
+}
+
+// check role (only professor allowed)
+if ($_SESSION['role'] !== 'professor') {
+    die("Access denied.");
+}
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $professor_id = $_SESSION['user_id'];
-    $class_name = $_POST['class_name'];
-
-    // generate code
-    $class_code = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, 6);
-
-    $sql = "INSERT INTO classes (class_name, class_code, professor_id)
-            VALUES ('$class_name', '$class_code', '$professor_id')";
-
-    if(mysqli_query($conn, $sql)){
-        $success = "Class created! Code: " . $class_code;
+    if (!isset($_POST['class_name']) || empty($_POST['class_name'])) {
+        $error = "Class name is required.";
     } else {
-        $error = "Error creating class.";
+
+        $professor_id = $_SESSION['id'];
+        $class_name = $_POST['class_name'];
+
+        // generate class code
+        $class_code = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, 6);
+
+        // insert query
+        $sql = "INSERT INTO classes (class_name, class_code, professor_id)
+                VALUES ('$class_name', '$class_code', '$professor_id')";
+
+        if (mysqli_query($conn, $sql)) {
+            $success = "Class created! Code: " . $class_code;
+        } else {
+            $error = "Database error: " . mysqli_error($conn);
+        }
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
